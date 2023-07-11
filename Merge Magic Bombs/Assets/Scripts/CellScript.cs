@@ -17,4 +17,21 @@ public class CellScript : MonoBehaviour
     {
         
     }
+
+    public void SwitchHighlightedCell()
+    {
+        if (isAvailable)
+            isHighlighted = !isHighlighted;
+    }
+
+    public void SwitchSelectedCell()
+    {
+        if (isAvailable)
+            isSelected = !isSelected;
+    }
+
+    private void UpdateCellState()
+    {
+        
+    }
 }

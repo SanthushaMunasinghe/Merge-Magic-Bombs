@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    protected int levelIndex;
+    public int levelIndex;
 
     void Awake()
     {

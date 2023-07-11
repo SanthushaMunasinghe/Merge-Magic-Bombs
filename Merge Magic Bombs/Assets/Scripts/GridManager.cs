@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager : GameplayManager
+public class GridManager : MonoBehaviour
 {
+    [SerializeField] private GameplayManager gameplayManager;
+
     //Cube Data
     private int _cubeTypeUnlockValue = 3;
     private int _cubeStrengthRange = 2;
@@ -31,7 +33,7 @@ public class GridManager : GameplayManager
 
     private void UnlockCubeValues()
     {
-        int currentUnlockValue = levelIndex - 1;
+        int currentUnlockValue = gameplayManager.levelIndex - 1;
 
         for (int i = 1; i < currentUnlockValue; i++)
         {
