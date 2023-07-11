@@ -79,7 +79,7 @@ public class GridManager : MonoBehaviour
     {
         foreach (GameObject cell in availableCells)
         {
-            //cell.GetComponent<CellScript>().isAvailable = true;
+            cell.GetComponent<CellStateManager>().ExitState(SwitchTypes.NotHighlight);
         }
     }
 }

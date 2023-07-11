@@ -13,9 +13,7 @@ public class CellHighlightedState : CellBaseState
 
     public override void ExitState(CellStateManager cell, SwitchTypes type)
     {
-        if (type == SwitchTypes.Select)
-            cell.SwitchState(cell.cellSelectedState);
-        else if (type == SwitchTypes.Take)
-            cell.SwitchState(cell.cellTakenState);
+        if (type == SwitchTypes.NotHighlight)
+            cell.SwitchState(cell.cellNotHighlightedState);
     }
 }

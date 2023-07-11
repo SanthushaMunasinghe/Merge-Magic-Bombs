@@ -2,21 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CellInactiveState : CellBaseState
+public class CellNotHighlightedState : CellBaseState
 {
     public override void EnterState(CellStateManager cell)
     {
-        cell.isActive = false;
         cell.isHighlighted = false;
         cell.isSelected = false;
         cell.isTaken = false;
+
+        Debug.Log("Not Highlighted");
     }
+
     public override void ExitState(CellStateManager cell, SwitchTypes type)
     {
-        if (type == SwitchTypes.NotHighlight)
-        {
-            cell.isActive = true;
-            cell.SwitchState(cell.cellNotHighlightedState);
-        }
+        if (type == SwitchTypes.Select)
+            cell.SwitchState(cell.cellSelectedState);
+        else if (type == SwitchTypes.Take)
+            cell.SwitchState(cell.cellTakenState);
     }
 }
