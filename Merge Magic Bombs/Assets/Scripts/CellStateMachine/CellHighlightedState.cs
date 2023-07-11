@@ -9,6 +9,8 @@ public class CellHighlightedState : CellBaseState
         cell.isHighlighted = true;
         cell.isSelected = false;
         cell.isTaken = false;
+
+        cell.highlightObject.SetActive(true);
     }
 
     public override void ExitState(CellStateManager cell, SwitchTypes type)

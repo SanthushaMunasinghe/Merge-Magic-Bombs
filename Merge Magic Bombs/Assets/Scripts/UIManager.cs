@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    private Camera mainCam;
+    private Camera _mainCam;
+    private GridManager _gridManager;
+
+    public GameObject bombPanel;
+
+    private GameObject _currentObject;
 
     private void Awake()
     {
-        mainCam = Camera.main;
+        _mainCam = Camera.main;
+        _gridManager = GetComponent<GridManager>();
     }
 
     private void Update()
@@ -18,17 +24,32 @@ public class UIManager : MonoBehaviour
 
     public void UITouched(Vector2 pos)
     {
-        Ray ray = mainCam.ScreenPointToRay(pos);
+        Ray ray = _mainCam.ScreenPointToRay(pos);
 
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
             Collider collider = hit.collider;
+            _currentObject = collider.gameObject;
 
             if (collider.tag == "Cell")
             {
-                Debug.Log(collider.gameObject.transform.position);
+                if (bombPanel.activeSelf == false)
+                {
+                    _gridManager.SelectAvailableCell(_currentObject);
+                }
             }
         }
+    }
+
+    public void ConfirmRandomBomb()
+    {
+
+    }
+
+    public void RejectRandomBomb()
+    {
+        _gridManager.ActivateAvailableCells();
+        bombPanel.SetActive(false);
     }
 }

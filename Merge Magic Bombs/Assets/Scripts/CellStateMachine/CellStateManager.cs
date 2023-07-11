@@ -10,6 +10,12 @@ public class CellStateManager : MonoBehaviour
     public bool isSelected = false;
     public bool isTaken = false;
 
+    //Tile Data
+    public GameObject highlightObject;
+
+    //UI
+    public UIManager uIManager;
+
     //State Data
     CellBaseState currentState;
 
@@ -23,6 +29,8 @@ public class CellStateManager : MonoBehaviour
 
     void Start()
     {
+        uIManager = GameObject.Find("GameplayManager").GetComponent<UIManager>();
+
         currentState = cellInactiveState;
         currentState.EnterState(this);
     }
@@ -51,6 +59,4 @@ public enum SwitchTypes
     NotHighlight,
     Select,
     Take,
-    TakeSelect,
-    TakeHighlight,
 }

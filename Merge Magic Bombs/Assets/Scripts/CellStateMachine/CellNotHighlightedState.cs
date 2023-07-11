@@ -10,7 +10,7 @@ public class CellNotHighlightedState : CellBaseState
         cell.isSelected = false;
         cell.isTaken = false;
 
-        Debug.Log("Not Highlighted");
+        cell.highlightObject.SetActive(false);
     }
 
     public override void ExitState(CellStateManager cell, SwitchTypes type)

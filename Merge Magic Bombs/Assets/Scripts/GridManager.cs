@@ -14,6 +14,9 @@ public class GridManager : MonoBehaviour
     [SerializeField] private GameObject[] _cubePrefabs;
     [SerializeField] private int _maxCubeStrengthRange;
 
+    [Header("Bomb Data")]
+    [SerializeField] private GameObject[] _bombPrefabs;
+
     //Grid Data
     [Header("Grid Data")]
     [SerializeField] private Transform _cellParent;
@@ -72,14 +75,25 @@ public class GridManager : MonoBehaviour
                 _initialCellTf.Add(_cellParent.GetChild(i).gameObject);
         }
 
-        UpdateAvailableCells();
+        ActivateAvailableCells();
     }
 
-    private void UpdateAvailableCells()
+    public void ActivateAvailableCells()
     {
         foreach (GameObject cell in availableCells)
         {
             cell.GetComponent<CellStateManager>().ExitState(SwitchTypes.NotHighlight);
+        }
+    }
+
+    public void SelectAvailableCell(GameObject currentCell)
+    {
+        foreach (GameObject cell in availableCells)
+        {
+            if (cell == currentCell)
+                cell.GetComponent<CellStateManager>().ExitState(SwitchTypes.Select);
+            else
+                cell.GetComponent<CellStateManager>().ExitState(SwitchTypes.NotHighlight);
         }
     }
 }

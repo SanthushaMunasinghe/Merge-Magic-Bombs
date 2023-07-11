@@ -9,10 +9,16 @@ public class CellSelectedState : CellBaseState
         cell.isHighlighted = false;
         cell.isSelected = true;
         cell.isTaken = false;
+
+        cell.highlightObject.SetActive(true);
+        cell.uIManager.bombPanel.SetActive(true);
     }
     public override void ExitState(CellStateManager cell, SwitchTypes type)
     {
-        if (type == SwitchTypes.Highlight)
-            cell.SwitchState(cell.cellHighlightedState);
+        if (type == SwitchTypes.NotHighlight)
+        {
+            cell.uIManager.bombPanel.SetActive(true);
+            cell.SwitchState(cell.cellNotHighlightedState);
+        }
     }
 }

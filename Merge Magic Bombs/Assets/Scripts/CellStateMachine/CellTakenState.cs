@@ -9,14 +9,14 @@ public class CellTakenState : CellBaseState
         cell.isHighlighted = false;
         cell.isSelected = false;
         cell.isTaken = true;
+
+        cell.highlightObject.SetActive(false);
     }
     public override void ExitState(CellStateManager cell, SwitchTypes type)
     {
-        if (type == SwitchTypes.Highlight)
-            cell.SwitchState(cell.cellHighlightedState);
-        else if (type == SwitchTypes.Select)
+        if (type == SwitchTypes.Select)
             cell.SwitchState(cell.cellTakenSelectedState);
-        else if (type == SwitchTypes.TakeHighlight)
+        else if (type == SwitchTypes.Highlight)
             cell.SwitchState(cell.cellTakenHighlightedState);
     }
 }
