@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    private InputManager playerInputManager;
     private Camera mainCam;
 
     private void Awake()
     {
-        playerInputManager = GetComponent<InputManager>();
         mainCam = Camera.main;
     }
 
@@ -25,7 +23,6 @@ public class UIManager : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            // Get the collider and its tag
             Collider collider = hit.collider;
 
             if (collider.tag == "Cell")
