@@ -78,6 +78,14 @@ public class GridManager : MonoBehaviour
         ActivateAvailableCells();
     }
 
+    public void CreateBomb(Vector3 pos)
+    {
+        int randCubeIndex = Random.Range(0, _cubeTypeUnlockValue);
+
+        GameObject bombClone = Instantiate(_bombPrefabs[randCubeIndex], new Vector3(pos.x, 0.5f, pos.z), Quaternion.identity);
+
+    }
+
     public void ActivateAvailableCells()
     {
         foreach (GameObject cell in availableCells)
@@ -88,11 +96,22 @@ public class GridManager : MonoBehaviour
 
     public void SelectAvailableCell(GameObject currentCell)
     {
+        currentCell.GetComponent<CellStateManager>().ExitState(SwitchTypes.Select);
+
         foreach (GameObject cell in availableCells)
         {
-            if (cell == currentCell)
-                cell.GetComponent<CellStateManager>().ExitState(SwitchTypes.Select);
-            else
+            if (cell != currentCell)
+                cell.GetComponent<CellStateManager>().ExitState(SwitchTypes.NotHighlight);
+        }
+    }
+
+    public void TakeCell(GameObject currentCell)
+    {
+         currentCell.GetComponent<CellStateManager>().ExitState(SwitchTypes.Take);
+
+        foreach (GameObject cell in availableCells)
+        {
+            if (cell != currentCell)
                 cell.GetComponent<CellStateManager>().ExitState(SwitchTypes.NotHighlight);
         }
     }

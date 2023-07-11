@@ -20,5 +20,7 @@ public class CellSelectedState : CellBaseState
             cell.uIManager.bombPanel.SetActive(true);
             cell.SwitchState(cell.cellNotHighlightedState);
         }
+        else if (type == SwitchTypes.Take)
+            cell.SwitchState(cell.cellTakenState);
     }
 }

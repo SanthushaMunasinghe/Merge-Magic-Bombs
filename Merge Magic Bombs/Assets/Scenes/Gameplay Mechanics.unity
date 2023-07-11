@@ -5519,7 +5519,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1368335024}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1704485781}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: ConfirmRandomBomb
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1368335024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7019,6 +7031,11 @@ MonoBehaviour:
   - {fileID: 4623432665036747010, guid: d3f8e780d5289e2489ab2c7959127feb, type: 3}
   - {fileID: 1747585849597288767, guid: 58e9ba4742e8d1343a40cecdd8bbaab5, type: 3}
   _maxCubeStrengthRange: 9
+  _bombPrefabs:
+  - {fileID: 7287232144077847356, guid: d45455e43f7d8c14ca96e39d22a2bf09, type: 3}
+  - {fileID: 5564198436313371586, guid: 72ced2e5c95c23e49be00817db14d0de, type: 3}
+  - {fileID: 7371197761319275882, guid: bd8983ddc30a68949b3fe9b163813e29, type: 3}
+  - {fileID: 2006527442449934111, guid: 14bb5f14bdd57a14caa8377b484b14cf, type: 3}
   _cellParent: {fileID: 1609960298}
   _initialCellTf: []
   availableCells: []

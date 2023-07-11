@@ -11,10 +11,11 @@ public class CellTakenSelectedState : CellBaseState
         cell.isTaken = true;
 
         cell.highlightObject.SetActive(true);
+        Debug.Log("TakenSelected");
     }
     public override void ExitState(CellStateManager cell, SwitchTypes type)
     {
-        if (type == SwitchTypes.Take)
+        if (type == SwitchTypes.NotHighlight)
             cell.SwitchState(cell.cellTakenState);
         else if (type == SwitchTypes.Highlight)
             cell.SwitchState(cell.cellHighlightedState);

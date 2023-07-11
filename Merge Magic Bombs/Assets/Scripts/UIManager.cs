@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject bombPanel;
 
-    private GameObject _currentObject;
+    public GameObject _currentObject;
 
     private void Awake()
     {
@@ -27,24 +27,23 @@ public class UIManager : MonoBehaviour
         Ray ray = _mainCam.ScreenPointToRay(pos);
 
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit) && bombPanel.activeSelf == false)
         {
             Collider collider = hit.collider;
             _currentObject = collider.gameObject;
 
             if (collider.tag == "Cell")
             {
-                if (bombPanel.activeSelf == false)
-                {
-                    _gridManager.SelectAvailableCell(_currentObject);
-                }
+                _gridManager.SelectAvailableCell(_currentObject);
             }
         }
     }
 
     public void ConfirmRandomBomb()
     {
-
+        _gridManager.CreateBomb(_currentObject.transform.position);
+        _gridManager.TakeCell(_currentObject);
+        bombPanel.SetActive(false);
     }
 
     public void RejectRandomBomb()
