@@ -4906,7 +4906,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7371197761319275882}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1, z: 1.5}
@@ -4925,4 +4925,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageAmount: 1
   damageArea: 1
+  duration: 0.25
+  currentVec: {x: 0, y: 0, z: 0}
   parentCell: {fileID: 0}
+  gridManager: {fileID: 0}
+  bombSelected: 0
+  isMoving: 0

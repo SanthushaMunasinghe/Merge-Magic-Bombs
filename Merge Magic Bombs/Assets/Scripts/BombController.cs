@@ -7,11 +7,19 @@ public class BombController : MonoBehaviour
     public int damageAmount = 1;
     public int damageArea = 1;
 
+    public float duration;
+
+    private Vector3 targetPos;
+    public Vector3 currentVec;
+    private Vector3 currentPos;
+    private float currentTime;
+
     public GameObject parentCell;
 
     public GridStateManager gridManager;
 
     public bool bombSelected = false;
+    public bool isMoving = false;
 
     void Start()
     {
@@ -20,6 +28,33 @@ public class BombController : MonoBehaviour
 
     void Update()
     {
-        
+        if (isMoving)
+        {
+            MovetoPosition();
+        }
+    }
+
+    public void truggerMoveToPosition(Vector3 pos)
+    {
+        targetPos = pos;
+        currentPos = transform.position;
+        currentTime = 0.0f;
+        isMoving = true;
+    }
+
+    private void MovetoPosition()
+    {
+
+        currentTime += Time.deltaTime;
+
+        currentVec = Vector3.Lerp(new Vector3(currentPos.x, 0.5f, currentPos.z),
+            new Vector3(targetPos.x, 0.5f, targetPos.z), currentTime / duration);
+
+        transform.position = currentVec;
+
+        if (targetPos == transform.position)
+        {
+            isMoving = false;
+        }
     }
 }
