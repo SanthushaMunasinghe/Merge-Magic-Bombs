@@ -16,9 +16,9 @@ public class GridBombSelectedState : GridBaseState
             bomb.GetComponent<BombController>().parentCell.GetComponent<CellScript>().isSelected = true;
         }
     }
-    public override void UpdateState(GridStateManager grid, GridActionTypes action)
+    public override void UpdateState(GridStateManager grid, GridActionType action)
     {
-        if (action == GridActionTypes.Blast)
+        if (action == GridActionType.Blast)
         {
             foreach (GameObject explosion in grid.bombExplosionPrefabs)
             {

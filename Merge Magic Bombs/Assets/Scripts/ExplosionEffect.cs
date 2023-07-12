@@ -6,10 +6,10 @@ public class ExplosionEffect : MonoBehaviour
 {
     [SerializeField] private float _duration = 0.5f;
 
-    public CubeColors bombColor;
+    public CubeColor bombColor;
     public int explosionArea;
     public int explosionDamage;
-    public CubeColors expColor;
+    public CubeColor expColor;
     public GameObject explosionParticle;
     private float currentTime;
 

@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2609875825142659807}
   - component: {fileID: 2609875825142659804}
   - component: {fileID: 2609875825142659805}
+  - component: {fileID: 2220246539734330689}
   m_Layer: 0
   m_Name: BlueCharm02
-  m_TagString: Untagged
+  m_TagString: Mod
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,3 +99,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2220246539734330689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2609875825142659802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c02b74428dd19f244816b455d5ed3d8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modType: 1
+  modColor: 0
+  parentCell: {fileID: 0}
+  gridStateManager: {fileID: 0}
+  duration: 0.25
+  currentVec: {x: 0, y: 0, z: 0}
+  bombSelected: 0
+  isMoving: 0

@@ -8,6 +8,7 @@ TagManager:
   - Bomb
   - Cube
   - Explosion
+  - Mod
   layers:
   - Default
   - TransparentFX

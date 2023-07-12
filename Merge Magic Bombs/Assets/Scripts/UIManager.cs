@@ -48,16 +48,16 @@ public class UIManager : MonoBehaviour
 
     public void ConfirmRandomBomb()
     {
-        _gridStateManager.UpdateState(GridActionTypes.PlaceBomb);
+        _gridStateManager.UpdateState(GridActionType.PlaceBomb);
     }
 
     public void RejectRandomBomb()
     {
-        _gridStateManager.UpdateState(GridActionTypes.CancelPlaceBomb);
+        _gridStateManager.UpdateState(GridActionType.CancelPlaceBomb);
     }
 
     public void Blast()
     {
-        _gridStateManager.UpdateState(GridActionTypes.Blast);
+        _gridStateManager.UpdateState(GridActionType.Blast);
     }
 }

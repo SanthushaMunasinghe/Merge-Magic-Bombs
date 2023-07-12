@@ -18,6 +18,9 @@ public class GridStateManager : MonoBehaviour
     [Header("Bomb Data")]
     [SerializeField] private GameObject[] _bombPrefabs;
     public GameObject[] bombExplosionPrefabs;
+    public GameObject[] bombModification01Prefabs;
+    public GameObject[] bombModification02Prefabs;
+    public GameObject[] bombModification03Prefabs;
     public List<GameObject> availableBombs = new List<GameObject>();
 
     //Grid Data
@@ -64,7 +67,7 @@ public class GridStateManager : MonoBehaviour
         currentState.UITouched(this, col.gameObject);
     }
 
-    public void UpdateState(GridActionTypes type)
+    public void UpdateState(GridActionType type)
     {
         currentState.UpdateState(this, type);
     }
@@ -125,6 +128,31 @@ public class GridStateManager : MonoBehaviour
         availableBombs.Add(bombClone);
     }
 
+    public void CreateModification(GameObject cube)
+    {
+        int randCubeIndex = Random.Range(0, _cubeTypeUnlockValue);
+        int randModIndex = Random.Range(0, 3);
+        Vector3 pos = cube.transform.position;
+
+        GameObject modClone;
+        if (randModIndex == 0)
+        {
+            modClone = Instantiate(bombModification01Prefabs[randCubeIndex], new Vector3(pos.x, 0.5f, pos.z), Quaternion.identity);
+        }
+        else if (randModIndex == 1)
+        {
+            modClone = Instantiate(bombModification02Prefabs[randCubeIndex], new Vector3(pos.x, 0.5f, pos.z), Quaternion.identity);
+        }
+        else
+        {
+            modClone = Instantiate(bombModification03Prefabs[randCubeIndex], new Vector3(pos.x, 0.5f, pos.z), Quaternion.identity);
+        }
+
+        BombModification bombModification = modClone.GetComponent<BombModification>();
+        bombModification.parentCell = ReturnAvailableCell(pos);
+        bombModification.gridStateManager = this;
+    }
+
     public void ActivateAvailableCells()
     {
         foreach (GameObject cell in availableCells)
@@ -148,11 +176,34 @@ public class GridStateManager : MonoBehaviour
         }
     }
 
+    public GameObject ReturnAvailableCell(Vector3 pos)
+    {
+        GameObject cell = null;
+        Debug.Log("Pos: " + pos);
+        foreach (GameObject currentCell in availableCells)
+        {
+            Debug.Log(currentCell.transform.position);
+            if (currentCell.transform.position.x == pos.x && currentCell.transform.position.z == pos.z)
+            {
+                cell = currentCell;
+            }
+        }
+
+        return cell;
+    }
+
 }
 
-public enum GridActionTypes
+public enum GridActionType
 {
     PlaceBomb,
     CancelPlaceBomb,
     Blast
+}
+
+public enum ModificationType
+{
+    modtype01,
+    modtype02,
+    modtype03,
 }

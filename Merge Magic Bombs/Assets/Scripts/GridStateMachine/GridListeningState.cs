@@ -8,7 +8,7 @@ public class GridListeningState : GridBaseState
     {
         grid.isListen = true;
     }
-    public override void UpdateState(GridStateManager grid, GridActionTypes action)
+    public override void UpdateState(GridStateManager grid, GridActionType action)
     {
         
     }
@@ -23,6 +23,10 @@ public class GridListeningState : GridBaseState
         {
             grid.gridBombSelectedState.selectedBomb = colObj;
             grid.SwitchState(grid.gridBombSelectedState);
+        }else if (colObj.tag == "Mod")
+        {
+            grid.gridModificationSelectedState.selectedMod = colObj;
+            grid.SwitchState(grid.gridModificationSelectedState);
         }
     }
 }

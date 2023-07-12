@@ -17,7 +17,7 @@ public class GameplayManager : MonoBehaviour
     }
 }
 
-public enum CubeColors
+public enum CubeColor
 {
     Blue,
     Green,

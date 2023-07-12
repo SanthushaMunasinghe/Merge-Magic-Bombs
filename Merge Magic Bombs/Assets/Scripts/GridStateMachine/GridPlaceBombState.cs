@@ -10,16 +10,16 @@ public class GridPlaceBombState : GridBaseState
         grid.uIManager.currentObject.GetComponent<CellScript>().isSelected = true;
         grid.uIManager.bombPanel.SetActive(true);
     }
-    public override void UpdateState(GridStateManager grid, GridActionTypes action)
+    public override void UpdateState(GridStateManager grid, GridActionType action)
     {
-        if (action == GridActionTypes.PlaceBomb)
+        if (action == GridActionType.PlaceBomb)
         {
             grid.CreateBomb(grid.uIManager.currentObject);
             grid.uIManager.bombPanel.SetActive(false);
             grid.uIManager.currentObject.GetComponent<CellScript>().isSelected = false;
             grid.SwitchState(grid.gridListeningState);
         }
-        else if (action == GridActionTypes.CancelPlaceBomb)
+        else if (action == GridActionType.CancelPlaceBomb)
         {
             grid.uIManager.bombPanel.SetActive(false);
             grid.uIManager.currentObject.GetComponent<CellScript>().isSelected = false;

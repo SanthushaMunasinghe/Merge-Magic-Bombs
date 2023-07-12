@@ -6,7 +6,7 @@ public class BombController : MonoBehaviour
 {
     public int damageAmount = 1;
     public int damageArea = 3;
-    public CubeColors bombColor;
+    public CubeColor bombColor;
 
     public float duration;
 

@@ -7,10 +7,11 @@ public class CubeObject : MonoBehaviour
     public GridStateManager gridStateManager;
 
     public int cubeStrength;
-    public CubeColors cubeColor;
+    public CubeColor cubeColor;
 
     void Start()
     {
+        
     }
 
     void Update()
@@ -39,6 +40,12 @@ public class CubeObject : MonoBehaviour
     private void DestroyCube()
     {
         gridStateManager.ActivateNewCell(new Vector3(transform.position.x, -0.25f, transform.position.z));
+
+        if (Random.Range(0, 2) == 0)
+        {
+            gridStateManager.CreateModification(gameObject);
+        }
+
         Destroy(gameObject);
     }
 }
