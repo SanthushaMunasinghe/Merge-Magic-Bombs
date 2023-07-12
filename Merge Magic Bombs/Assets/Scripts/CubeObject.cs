@@ -38,7 +38,7 @@ public class CubeObject : MonoBehaviour
 
     private void DestroyCube()
     {
-        gridStateManager.ActivateNewCell(gameObject);
+        gridStateManager.ActivateNewCell(new Vector3(transform.position.x, -0.25f, transform.position.z));
         Destroy(gameObject);
     }
 }

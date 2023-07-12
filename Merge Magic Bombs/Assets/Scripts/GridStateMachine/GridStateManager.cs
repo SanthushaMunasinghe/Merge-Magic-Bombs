@@ -134,15 +134,16 @@ public class GridStateManager : MonoBehaviour
         }
     }
 
-    public void ActivateNewCell(GameObject currentCube)
+    public void ActivateNewCell(Vector3 currentCubePos)
     {
         foreach (GameObject cell in initialCells)
         {
-            if (cell.transform.position == currentCube.transform.position)
+            if (cell.transform.position == currentCubePos)
             {
-                initialCells.Remove(cell);
                 availableCells.Add(cell);
+                initialCells.Remove(cell);
                 cell.GetComponent<CellScript>().isActive = true;
+                return;
             }
         }
     }
