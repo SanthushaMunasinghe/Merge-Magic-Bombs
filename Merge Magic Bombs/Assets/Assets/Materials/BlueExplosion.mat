@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_SpotAimShader
+  m_Name: BlueExplosion
   m_Shader: {fileID: -6465566751694194690, guid: ab431195cc7f34046b216cee7c499f97,
     type: 3}
   m_ValidKeywords:
@@ -55,7 +55,7 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _IntersectionColor: {r: 28.51895, g: 28.51895, b: 28.51895, a: 1}
+    - _IntersectionColor: {r: 0, g: 12.899979, b: 38.075047, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &56995851439593681
 MonoBehaviour:

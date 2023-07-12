@@ -15,14 +15,12 @@ public class GridListeningState : GridBaseState
 
     public override void UITouched(GridStateManager grid, GameObject colObj)
     {
-        if (colObj.tag == "Cell")
+        if (colObj.tag == "Cell" && colObj.GetComponent<CellScript>().isActive)
         {
-            grid.SelectAvailableCell(colObj);
             grid.SwitchState(grid.gridPlaceBombState);
         }
         else if (colObj.tag == "Bomb")
         {
-            grid.SelectAvailableCell(colObj.GetComponent<BombController>().parentCell);
             grid.gridBombSelectedState.selectedBomb = colObj;
             grid.SwitchState(grid.gridBombSelectedState);
         }

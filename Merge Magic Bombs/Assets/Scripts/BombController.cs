@@ -5,7 +5,8 @@ using UnityEngine;
 public class BombController : MonoBehaviour
 {
     public int damageAmount = 1;
-    public int damageArea = 1;
+    public int damageArea = 3;
+    public CubeColors bombColor;
 
     public float duration;
 
@@ -15,26 +16,30 @@ public class BombController : MonoBehaviour
     private float currentTime;
 
     public GameObject parentCell;
+    [SerializeField] private GameObject spotMarker;
 
-    public GridStateManager gridManager;
+    public GridStateManager gridStateManager;
 
     public bool bombSelected = false;
     public bool isMoving = false;
 
     void Start()
     {
-        
+        spotMarker.transform.localScale = new Vector3(damageArea, damageArea, damageArea);
     }
 
     void Update()
     {
         if (isMoving)
-        {
             MovetoPosition();
-        }
+
+        if (bombSelected)
+            spotMarker.SetActive(true);
+        else
+            spotMarker.SetActive(false);
     }
 
-    public void truggerMoveToPosition(Vector3 pos)
+    public void triggerMoveToPosition(Vector3 pos)
     {
         targetPos = pos;
         currentPos = transform.position;
@@ -56,5 +61,19 @@ public class BombController : MonoBehaviour
         {
             isMoving = false;
         }
+    }
+
+    public void Blast(GameObject eFX)
+    {
+        bombSelected = false;
+        GameObject eObj = eFX;
+        ExplosionEffect efxScript = eObj.GetComponent<ExplosionEffect>();
+        efxScript.explosionDamage = damageAmount;
+        efxScript.explosionArea = damageArea;
+        efxScript.expColor = bombColor;
+        GameObject eFXClone = Instantiate(eObj, transform.position, Quaternion.identity);
+        eFXClone.transform.parent = transform;
+        gridStateManager.availableBombs.Remove(gameObject);
+        Destroy(gameObject, 0.5f);
     }
 }

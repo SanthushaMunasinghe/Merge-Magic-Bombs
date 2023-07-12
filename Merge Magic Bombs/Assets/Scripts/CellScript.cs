@@ -4,34 +4,25 @@ using UnityEngine;
 
 public class CellScript : MonoBehaviour
 {
-    public bool isAvailable = false;
-    public bool isHighlighted = false;
+    //State Output
+    public bool isActive = false;
     public bool isSelected = false;
+
+    //Tile Data
+    public GameObject highlightObject;
 
     void Start()
     {
-        
     }
 
     void Update()
     {
-        
-    }
-
-    public void SwitchHighlightedCell()
-    {
-        if (isAvailable)
-            isHighlighted = !isHighlighted;
-    }
-
-    public void SwitchSelectedCell()
-    {
-        if (isAvailable)
-            isSelected = !isSelected;
-    }
-
-    private void UpdateCellState()
-    {
-        
+        if (isActive)
+        {
+            if (isSelected)
+                highlightObject.SetActive(true);
+            else
+                highlightObject.SetActive(false);
+        }
     }
 }

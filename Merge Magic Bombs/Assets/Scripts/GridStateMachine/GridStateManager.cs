@@ -17,13 +17,15 @@ public class GridStateManager : MonoBehaviour
 
     [Header("Bomb Data")]
     [SerializeField] private GameObject[] _bombPrefabs;
+    public GameObject[] bombExplosionPrefabs;
     public List<GameObject> availableBombs = new List<GameObject>();
 
     //Grid Data
     [Header("Grid Data")]
     [SerializeField] private Transform _cellParent;
-    public List<GameObject> initialCellTf = new List<GameObject>();
+    public List<GameObject> initialCells = new List<GameObject>();
     public List<GameObject> availableCells = new List<GameObject>();
+    public GameObject selectedCell;
     public bool isListen = false;
 
     //State Data
@@ -88,13 +90,14 @@ public class GridStateManager : MonoBehaviour
         SetInitialCells();
 
         //Generate Cubes
-        foreach (GameObject posObj in initialCellTf)
+        foreach (GameObject posObj in initialCells)
         {
             int randCubeIndex = Random.Range(0, _cubeTypeUnlockValue);
             Vector3 spawnPos = new Vector3(posObj.transform.position.x, posObj.transform.position.y + 0.25f, posObj.transform.position.z);
 
             GameObject cubeClone = Instantiate(_cubePrefabs[randCubeIndex], spawnPos, Quaternion.identity);
             cubeClone.GetComponent<CubeObject>().cubeStrength = Random.Range(1, _cubeStrengthRange + 1);
+            cubeClone.GetComponent<CubeObject>().gridStateManager = this;
         }
     }
 
@@ -105,7 +108,7 @@ public class GridStateManager : MonoBehaviour
             if (i < 5)
                 availableCells.Add(_cellParent.GetChild(i).gameObject);
             else
-                initialCellTf.Add(_cellParent.GetChild(i).gameObject);
+                initialCells.Add(_cellParent.GetChild(i).gameObject);
         }
 
         ActivateAvailableCells();
@@ -116,7 +119,9 @@ public class GridStateManager : MonoBehaviour
         int randCubeIndex = Random.Range(0, _cubeTypeUnlockValue);
         Vector3 pos = cell.transform.position;
         GameObject bombClone = Instantiate(_bombPrefabs[randCubeIndex], new Vector3(pos.x, 0.5f, pos.z), Quaternion.identity);
-        bombClone.GetComponent<BombController>().parentCell = cell;
+        BombController bombController = bombClone.GetComponent<BombController>();
+        bombController.parentCell = cell;
+        bombController.gridStateManager = this;
         availableBombs.Add(bombClone);
     }
 
@@ -124,40 +129,29 @@ public class GridStateManager : MonoBehaviour
     {
         foreach (GameObject cell in availableCells)
         {
-            cell.GetComponent<CellStateManager>().ExitState(SwitchTypes.NotHighlight);
+            initialCells.Remove(cell);
+            cell.GetComponent<CellScript>().isActive = true;
         }
     }
 
-    public void SelectAvailableCell(GameObject currentCell)
+    public void ActivateNewCell(GameObject currentCube)
     {
-        currentCell.GetComponent<CellStateManager>().ExitState(SwitchTypes.Select);
-
-        foreach (GameObject cell in availableCells)
+        foreach (GameObject cell in initialCells)
         {
-            if (cell != currentCell)
-                cell.GetComponent<CellStateManager>().ExitState(SwitchTypes.NotHighlight);
+            if (cell.transform.position == currentCube.transform.position)
+            {
+                initialCells.Remove(cell);
+                availableCells.Add(cell);
+                cell.GetComponent<CellScript>().isActive = true;
+            }
         }
     }
 
-    public void HighlightCells(GameObject currentCell)
-    {
-        currentCell.GetComponent<CellStateManager>().ExitState(SwitchTypes.Highlight);
-    }
-
-    public void TakeCell(GameObject currentCell)
-    {
-         currentCell.GetComponent<CellStateManager>().ExitState(SwitchTypes.Take);
-
-        foreach (GameObject cell in availableCells)
-        {
-            if (cell != currentCell)
-                cell.GetComponent<CellStateManager>().ExitState(SwitchTypes.NotHighlight);
-        }
-    }
 }
 
 public enum GridActionTypes
 {
     PlaceBomb,
-    CancelPlaceBomb
+    CancelPlaceBomb,
+    Blast
 }
