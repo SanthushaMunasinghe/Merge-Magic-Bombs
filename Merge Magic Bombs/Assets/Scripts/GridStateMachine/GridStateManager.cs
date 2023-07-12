@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+public class GridStateManager : MonoBehaviour
 {
-    [SerializeField] private GameplayManager gameplayManager;
+    private GameplayManager gameplayManager;
+    public UIManager uIManager;
 
     //Cube Data
     private int _cubeTypeUnlockValue = 3;
@@ -16,22 +17,54 @@ public class GridManager : MonoBehaviour
 
     [Header("Bomb Data")]
     [SerializeField] private GameObject[] _bombPrefabs;
+    public List<GameObject> availableBombs = new List<GameObject>();
 
     //Grid Data
     [Header("Grid Data")]
     [SerializeField] private Transform _cellParent;
-    public List<GameObject> _initialCellTf = new List<GameObject>();
+    public List<GameObject> initialCellTf = new List<GameObject>();
     public List<GameObject> availableCells = new List<GameObject>();
+    public bool isListen = false;
+
+    //State Data
+    GridBaseState currentState;
+
+    public GridListeningState gridListeningState = new GridListeningState();
+    public GridPlaceBombState gridPlaceBombState = new GridPlaceBombState();
+    public GridBombSelectedState gridBombSelectedState = new GridBombSelectedState();
+    public GridModificationSelectedState gridModificationSelectedState = new GridModificationSelectedState();
 
     void Start()
     {
+        gameplayManager = GetComponent<GameplayManager>();
+        uIManager = GetComponent<UIManager>();
+
         UnlockCubeValues();
         GenerateGrid();
+
+        currentState = gridListeningState;
+        currentState.EnterState(this);
     }
 
     void Update()
     {
         
+    }
+
+    public void SwitchState(GridBaseState state)
+    {
+        currentState = state;
+        state.EnterState(this);
+    }
+
+    public void UITouched(Collider col)
+    {
+        currentState.UITouched(this, col.gameObject);
+    }
+
+    public void UpdateState(GridActionTypes type)
+    {
+        currentState.UpdateState(this, type);
     }
 
     private void UnlockCubeValues()
@@ -55,7 +88,7 @@ public class GridManager : MonoBehaviour
         SetInitialCells();
 
         //Generate Cubes
-        foreach (GameObject posObj in _initialCellTf)
+        foreach (GameObject posObj in initialCellTf)
         {
             int randCubeIndex = Random.Range(0, _cubeTypeUnlockValue);
             Vector3 spawnPos = new Vector3(posObj.transform.position.x, posObj.transform.position.y + 0.25f, posObj.transform.position.z);
@@ -72,18 +105,19 @@ public class GridManager : MonoBehaviour
             if (i < 5)
                 availableCells.Add(_cellParent.GetChild(i).gameObject);
             else
-                _initialCellTf.Add(_cellParent.GetChild(i).gameObject);
+                initialCellTf.Add(_cellParent.GetChild(i).gameObject);
         }
 
         ActivateAvailableCells();
     }
 
-    public void CreateBomb(Vector3 pos)
+    public void CreateBomb(GameObject cell)
     {
         int randCubeIndex = Random.Range(0, _cubeTypeUnlockValue);
-
+        Vector3 pos = cell.transform.position;
         GameObject bombClone = Instantiate(_bombPrefabs[randCubeIndex], new Vector3(pos.x, 0.5f, pos.z), Quaternion.identity);
-
+        bombClone.GetComponent<BombController>().parentCell = cell;
+        availableBombs.Add(bombClone);
     }
 
     public void ActivateAvailableCells()
@@ -105,6 +139,11 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    public void HighlightCells(GameObject currentCell)
+    {
+        currentCell.GetComponent<CellStateManager>().ExitState(SwitchTypes.Highlight);
+    }
+
     public void TakeCell(GameObject currentCell)
     {
          currentCell.GetComponent<CellStateManager>().ExitState(SwitchTypes.Take);
@@ -115,4 +154,10 @@ public class GridManager : MonoBehaviour
                 cell.GetComponent<CellStateManager>().ExitState(SwitchTypes.NotHighlight);
         }
     }
+}
+
+public enum GridActionTypes
+{
+    PlaceBomb,
+    CancelPlaceBomb
 }

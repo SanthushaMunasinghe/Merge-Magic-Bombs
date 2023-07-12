@@ -7123,6 +7123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPanel: {fileID: 1990331387}
+  _currentObject: {fileID: 0}
 --- !u!1001 &1709844350
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,16 +5,16 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     private Camera _mainCam;
-    private GridManager _gridManager;
+    private GridStateManager _gridStateManager;
 
     public GameObject bombPanel;
+    public GameObject currentObject;
 
-    public GameObject _currentObject;
 
     private void Awake()
     {
         _mainCam = Camera.main;
-        _gridManager = GetComponent<GridManager>();
+        _gridStateManager = GetComponent<GridStateManager>();
     }
 
     private void Update()
@@ -27,28 +27,25 @@ public class UIManager : MonoBehaviour
         Ray ray = _mainCam.ScreenPointToRay(pos);
 
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit) && bombPanel.activeSelf == false)
+        if (Physics.Raycast(ray, out hit) && _gridStateManager.isListen)
         {
             Collider collider = hit.collider;
-            _currentObject = collider.gameObject;
 
-            if (collider.tag == "Cell")
+            if (collider != null)
             {
-                _gridManager.SelectAvailableCell(_currentObject);
+                currentObject = collider.gameObject;
+                _gridStateManager.UITouched(collider);
             }
         }
     }
 
     public void ConfirmRandomBomb()
     {
-        _gridManager.CreateBomb(_currentObject.transform.position);
-        _gridManager.TakeCell(_currentObject);
-        bombPanel.SetActive(false);
+        _gridStateManager.UpdateState(GridActionTypes.PlaceBomb);
     }
 
     public void RejectRandomBomb()
     {
-        _gridManager.ActivateAvailableCells();
-        bombPanel.SetActive(false);
+        _gridStateManager.UpdateState(GridActionTypes.CancelPlaceBomb);
     }
 }
