@@ -8,6 +8,8 @@ public class GridBombSelectedState : GridBaseState
 
     public override void EnterState(GridStateManager grid)
     {
+        selectedBomb.GetComponent<BombController>().bombSelected = true;
+
         foreach (GameObject bomb in grid.availableBombs)
         {
             grid.HighlightCells(bomb.GetComponent<BombController>().parentCell);
@@ -24,6 +26,7 @@ public class GridBombSelectedState : GridBaseState
         {
             if (colObj != selectedBomb)
             {
+                selectedBomb.GetComponent<BombController>().bombSelected = false;
                 selectedBomb.GetComponent<BombController>().truggerMoveToPosition(colObj.transform.position);
                 colObj.GetComponent<BombController>().truggerMoveToPosition(selectedBomb.transform.position);
                 grid.ActivateAvailableCells();
@@ -32,6 +35,7 @@ public class GridBombSelectedState : GridBaseState
         }
         else
         {
+            selectedBomb.GetComponent<BombController>().bombSelected = false;
             grid.ActivateAvailableCells();
             grid.SwitchState(grid.gridListeningState);
         }

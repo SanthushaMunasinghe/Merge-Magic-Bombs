@@ -16,5 +16,7 @@ public class CellTakenSelectedState : CellBaseState
     {
         if (type == SwitchTypes.NotHighlight)
             cell.SwitchState(cell.cellTakenState);
+        else if (type == SwitchTypes.Untake)
+            cell.SwitchState(cell.cellAvailableState);
     }
 }

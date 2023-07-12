@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CellHighlightedState : CellBaseState
+public class CellAvailableState : CellBaseState
 {
     public override void EnterState(CellStateManager cell)
     {

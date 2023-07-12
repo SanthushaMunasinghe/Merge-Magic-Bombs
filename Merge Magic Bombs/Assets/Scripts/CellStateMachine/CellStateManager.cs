@@ -20,7 +20,7 @@ public class CellStateManager : MonoBehaviour
     CellBaseState currentState;
 
     public CellInactiveState cellInactiveState = new CellInactiveState();
-    public CellHighlightedState cellHighlightedState = new CellHighlightedState();
+    public CellAvailableState cellAvailableState = new CellAvailableState();
     public CellNotHighlightedState cellNotHighlightedState = new CellNotHighlightedState();
     public CellSelectedState cellSelectedState = new CellSelectedState();
     public CellTakenState cellTakenState = new CellTakenState();
@@ -59,4 +59,5 @@ public enum SwitchTypes
     NotHighlight,
     Select,
     Take,
+    Untake,
 }
