@@ -179,10 +179,8 @@ public class GridStateManager : MonoBehaviour
     public GameObject ReturnAvailableCell(Vector3 pos)
     {
         GameObject cell = null;
-        Debug.Log("Pos: " + pos);
         foreach (GameObject currentCell in availableCells)
         {
-            Debug.Log(currentCell.transform.position);
             if (currentCell.transform.position.x == pos.x && currentCell.transform.position.z == pos.z)
             {
                 cell = currentCell;

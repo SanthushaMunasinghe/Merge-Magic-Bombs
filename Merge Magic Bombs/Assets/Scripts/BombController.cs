@@ -6,6 +6,7 @@ public class BombController : MonoBehaviour
 {
     public int damageAmount = 1;
     public int damageArea = 3;
+    public int blastCount = 1;
     public CubeColor bombColor;
 
     public float duration;
@@ -25,7 +26,7 @@ public class BombController : MonoBehaviour
 
     void Start()
     {
-        spotMarker.transform.localScale = new Vector3(damageArea, damageArea, damageArea);
+        
     }
 
     void Update()
@@ -34,7 +35,10 @@ public class BombController : MonoBehaviour
             MovetoPosition();
 
         if (bombSelected)
+        {
             spotMarker.SetActive(true);
+            spotMarker.transform.localScale = new Vector3(damageArea, damageArea, damageArea);
+        }
         else
             spotMarker.SetActive(false);
     }
@@ -49,7 +53,6 @@ public class BombController : MonoBehaviour
 
     private void MovetoPosition()
     {
-
         currentTime += Time.deltaTime;
 
         currentVec = Vector3.Lerp(new Vector3(currentPos.x, 0.5f, currentPos.z),
@@ -60,6 +63,62 @@ public class BombController : MonoBehaviour
         if (targetPos == transform.position)
         {
             isMoving = false;
+        }
+    }
+
+    public bool CheckAvailability(ModificationType type, CubeColor currentColor)
+    {
+        if (currentColor == bombColor)
+        {
+            if (type == ModificationType.modtype01 && damageAmount < 3)
+                return true;
+            else if (type == ModificationType.modtype02 && blastCount < 3)
+                return true;
+            else if (type == ModificationType.modtype03 && damageArea < 7)
+                return true;
+            else
+                return false;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void AttachModification(GameObject mod, ModificationType type)
+    {
+        if (type == ModificationType.modtype01)
+        {
+            StartCoroutine(AttachOrRemove(mod, 1, damageArea));
+            damageAmount++;
+        }
+        else if (type == ModificationType.modtype02)
+        {
+            StartCoroutine(AttachOrRemove(mod, 1, blastCount));
+            blastCount++;
+        }
+        else if (type == ModificationType.modtype03)
+        {
+            StartCoroutine(AttachOrRemove(mod, 3, damageArea));
+            damageArea += 2;
+        }
+    }
+
+    private IEnumerator AttachOrRemove(GameObject obj, int expectedValue, int currentValue)
+    {
+        if (currentValue > expectedValue)
+        {
+            while (obj.transform.position != transform.position)
+            {
+                yield return null;
+            }
+
+            Destroy(obj);
+        }
+        else
+        {
+            obj.GetComponent<Collider>().enabled = false;
+            obj.transform.parent = transform;
         }
     }
 

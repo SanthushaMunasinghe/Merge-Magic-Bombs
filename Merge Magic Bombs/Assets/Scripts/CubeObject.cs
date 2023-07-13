@@ -31,7 +31,7 @@ public class CubeObject : MonoBehaviour
     {
         cubeStrength -= damageAmount;
 
-        if (cubeStrength >= 0)
+        if (cubeStrength <= 0)
         {
             DestroyCube();
         }

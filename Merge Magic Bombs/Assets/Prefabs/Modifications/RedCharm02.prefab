@@ -117,5 +117,5 @@ MonoBehaviour:
   gridStateManager: {fileID: 0}
   duration: 0.25
   currentVec: {x: 0, y: 0, z: 0}
-  bombSelected: 0
+  modSelected: 0
   isMoving: 0

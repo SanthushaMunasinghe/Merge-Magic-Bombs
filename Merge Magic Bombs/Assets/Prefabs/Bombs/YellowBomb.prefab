@@ -114,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageAmount: 1
   damageArea: 3
+  blastCount: 1
   bombColor: 3
   duration: 0.25
   currentVec: {x: 0, y: 0, z: 0}

@@ -41,7 +41,6 @@ public class BombModification : MonoBehaviour
 
     private void MovetoPosition()
     {
-
         currentTime += Time.deltaTime;
 
         currentVec = Vector3.Lerp(new Vector3(currentPos.x, 0.5f, currentPos.z),

@@ -16,7 +16,7 @@ public class GridModificationSelectedState : GridBaseState
 
         foreach (GameObject bomb in grid.availableBombs)
         {
-            if (bomb.GetComponent<BombController>().bombColor == selectedModObj.modColor)
+            if (bomb.GetComponent<BombController>().CheckAvailability(selectedModObj.modType, selectedModObj.modColor))
             {
                 bomb.GetComponent<BombController>().parentCell.GetComponent<CellScript>().isSelected = true;
             }
@@ -32,14 +32,17 @@ public class GridModificationSelectedState : GridBaseState
         if (colObj.tag == "Bomb")
         {
             BombModification selectedModObj = selectedMod.GetComponent<BombModification>();
+            BombController selectedBomb = colObj.GetComponent<BombController>();
 
-            if (colObj != selectedMod && colObj.GetComponent<BombController>().bombColor == selectedModObj.modColor)
+            if (colObj != selectedMod && selectedBomb.CheckAvailability(selectedModObj.modType, selectedModObj.modColor))
             {
-                selectedMod.GetComponent<BombModification>().parentCell.GetComponent<CellScript>().isSelected = false;
+                selectedModObj.parentCell.GetComponent<CellScript>().isSelected = false;
 
                 selectedModObj.modSelected = false;
                 selectedModObj.triggerMoveToPosition(colObj.transform.position);
-                selectedModObj.parentCell = colObj.GetComponent<BombController>().parentCell;
+                selectedModObj.parentCell = selectedBomb.parentCell;
+
+                colObj.GetComponent<BombController>().AttachModification(selectedMod, selectedModObj.modType);
 
                 selectedMod.GetComponent<BombModification>().parentCell.GetComponent<CellScript>().isSelected = false;
 
