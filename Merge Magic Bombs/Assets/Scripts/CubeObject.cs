@@ -42,6 +42,15 @@ public class CubeObject : MonoBehaviour
             gridStateManager.CreateModification(gameObject);
         }
         gridStateManager.spawnedCubes.Remove(gameObject);
+
+        foreach (GameObject expPrefab in gridStateManager.cubeExplosionPrefabs)
+        {
+            if (expPrefab.GetComponent<CubeExplosionObject>().explColor == cubeColor)
+            {
+                Instantiate(expPrefab, transform.position, Quaternion.identity);
+            }
+        }
+
         Destroy(gameObject);
     }
 }

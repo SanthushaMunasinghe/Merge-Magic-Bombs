@@ -14,6 +14,7 @@ public class GridStateManager : MonoBehaviour
     [Header("Cube Data")]
     [SerializeField] private GameObject[] _cubePrefabs;
     [SerializeField] private int _maxCubeStrengthRange;
+    public GameObject[] cubeExplosionPrefabs;
     public GameObject popupTxt;
     public List<GameObject> spawnedCubes = new List<GameObject>();
 
