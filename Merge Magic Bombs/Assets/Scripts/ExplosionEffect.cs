@@ -6,9 +6,7 @@ public class ExplosionEffect : MonoBehaviour
 {
     [SerializeField] private float _duration = 0.5f;
 
-    public CubeColor bombColor;
     public int explosionArea;
-    public int explosionDamage;
     public CubeColor expColor;
     public GameObject explosionParticle;
     private float currentTime;
@@ -32,6 +30,7 @@ public class ExplosionEffect : MonoBehaviour
         {
             _clone = Instantiate(explosionParticle, transform.position, Quaternion.identity);
             _clone.transform.parent = transform;
+            Destroy(gameObject, 0.5f);
         }
     }
 

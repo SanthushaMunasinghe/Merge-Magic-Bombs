@@ -120,6 +120,8 @@ MonoBehaviour:
   currentVec: {x: 0, y: 0, z: 0}
   parentCell: {fileID: 0}
   spotMarker: {fileID: 3720977607410903049}
+  expDamageObj: {fileID: 8286472014407260562, guid: d1f948503aa0f60479e2f75c98c8aa3f,
+    type: 3}
   gridStateManager: {fileID: 0}
   bombSelected: 0
   isMoving: 0

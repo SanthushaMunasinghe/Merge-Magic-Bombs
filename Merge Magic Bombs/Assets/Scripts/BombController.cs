@@ -18,6 +18,7 @@ public class BombController : MonoBehaviour
 
     public GameObject parentCell;
     [SerializeField] private GameObject spotMarker;
+    [SerializeField] private GameObject expDamageObj;
 
     public GridStateManager gridStateManager;
 
@@ -89,7 +90,7 @@ public class BombController : MonoBehaviour
     {
         if (type == ModificationType.modtype01)
         {
-            StartCoroutine(AttachOrRemove(mod, 1, damageArea));
+            StartCoroutine(AttachOrRemove(mod, 1, damageAmount));
             damageAmount++;
         }
         else if (type == ModificationType.modtype02)
@@ -120,18 +121,20 @@ public class BombController : MonoBehaviour
             obj.GetComponent<Collider>().enabled = false;
             obj.transform.parent = transform;
         }
+
+        gridStateManager.availableMods.Remove(obj);
     }
 
     public void Blast(GameObject eFX)
     {
         bombSelected = false;
+        GameObject expDamageColone = Instantiate(expDamageObj, transform.position, Quaternion.identity);
+        expDamageColone.GetComponent<ExplosionDamage>().EnabledMethod(damageArea, damageAmount, bombColor);
         GameObject eObj = eFX;
         ExplosionEffect efxScript = eObj.GetComponent<ExplosionEffect>();
-        efxScript.explosionDamage = damageAmount;
         efxScript.explosionArea = damageArea;
         efxScript.expColor = bombColor;
-        GameObject eFXClone = Instantiate(eObj, transform.position, Quaternion.identity);
-        eFXClone.transform.parent = transform;
+        Instantiate(eObj, transform.position, Quaternion.identity);
         gridStateManager.availableBombs.Remove(gameObject);
         Destroy(gameObject, 0.5f);
     }

@@ -9,6 +9,8 @@ public class CubeObject : MonoBehaviour
     public int cubeStrength;
     public CubeColor cubeColor;
 
+    private bool destroyFlag = false;
+
     void Start()
     {
         
@@ -16,24 +18,18 @@ public class CubeObject : MonoBehaviour
 
     void Update()
     {
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Explosion" && other.GetComponent<ExplosionEffect>().expColor == cubeColor)
+        if (destroyFlag)
         {
-            Damage(other.GetComponent<ExplosionEffect>().explosionDamage);
+            DestroyCube();
         }
     }
 
     public void Damage(int damageAmount)
     {
         cubeStrength -= damageAmount;
-
         if (cubeStrength <= 0)
         {
-            DestroyCube();
+            destroyFlag = true;
         }
     }
 

@@ -128,9 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _duration: 0.1
-  bombColor: 3
   explosionArea: 4
-  explosionDamage: 1
-  expColor: 0
+  expColor: 3
   explosionParticle: {fileID: 8917549883712039177, guid: c18ae7a9a810a2a4daf6aa415e153c82,
     type: 3}

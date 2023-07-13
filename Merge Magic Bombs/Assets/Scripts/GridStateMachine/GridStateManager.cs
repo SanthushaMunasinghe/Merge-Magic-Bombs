@@ -9,7 +9,7 @@ public class GridStateManager : MonoBehaviour
 
     //Cube Data
     private int _cubeTypeUnlockValue = 3;
-    private int _cubeStrengthRange = 2;
+    private int _cubeStrengthRange = 1;
 
     [Header("Cube Data")]
     [SerializeField] private GameObject[] _cubePrefabs;
@@ -22,6 +22,7 @@ public class GridStateManager : MonoBehaviour
     public GameObject[] bombModification02Prefabs;
     public GameObject[] bombModification03Prefabs;
     public List<GameObject> availableBombs = new List<GameObject>();
+    public List<GameObject> availableMods = new List<GameObject>();
 
     //Grid Data
     [Header("Grid Data")]
@@ -149,6 +150,7 @@ public class GridStateManager : MonoBehaviour
         }
 
         BombModification bombModification = modClone.GetComponent<BombModification>();
+        availableMods.Add(modClone);
         bombModification.parentCell = ReturnAvailableCell(pos);
         bombModification.gridStateManager = this;
     }

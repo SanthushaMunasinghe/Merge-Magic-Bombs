@@ -15,6 +15,11 @@ public class GridBombSelectedState : GridBaseState
         {
             bomb.GetComponent<BombController>().parentCell.GetComponent<CellScript>().isSelected = true;
         }
+        
+        foreach (GameObject mod in grid.availableMods)
+        {
+            mod.GetComponent<BombModification>().parentCell.GetComponent<CellScript>().isSelected = true;
+        }
     }
     public override void UpdateState(GridStateManager grid, GridActionType action)
     {
@@ -22,12 +27,18 @@ public class GridBombSelectedState : GridBaseState
         {
             foreach (GameObject explosion in grid.bombExplosionPrefabs)
             {
-                if (explosion.GetComponent<ExplosionEffect>().bombColor == selectedBomb.GetComponent<BombController>().bombColor)
+                if (explosion.GetComponent<ExplosionEffect>().expColor == selectedBomb.GetComponent<BombController>().bombColor)
                 {
                     foreach (GameObject bomb in grid.availableBombs)
                     {
                         bomb.GetComponent<BombController>().parentCell.GetComponent<CellScript>().isSelected = false;
                     }
+
+                    foreach (GameObject mod in grid.availableMods)
+                    {
+                        mod.GetComponent<BombModification>().parentCell.GetComponent<CellScript>().isSelected = false;
+                    }
+
                     selectedBomb.GetComponent<BombController>().Blast(explosion);
                     grid.uIManager.blastBtn.SetActive(false);
                     grid.SwitchState(grid.gridListeningState);
@@ -59,8 +70,39 @@ public class GridBombSelectedState : GridBaseState
                     bomb.GetComponent<BombController>().parentCell.GetComponent<CellScript>().isSelected = false;
                 }
 
+                foreach (GameObject mod in grid.availableMods)
+                {
+                    mod.GetComponent<BombModification>().parentCell.GetComponent<CellScript>().isSelected = false;
+                }
+
                 grid.SwitchState(grid.gridListeningState);
             }
+        }
+        else if (colObj.tag == "Mod")
+        {
+            BombController selectedBombController = selectedBomb.GetComponent<BombController>();
+            BombModification currentBombMod = colObj.GetComponent<BombModification>();
+            GameObject selectedParentCell = selectedBombController.parentCell;
+
+            selectedBombController.bombSelected = false;
+            grid.uIManager.blastBtn.SetActive(false);
+            selectedBombController.triggerMoveToPosition(colObj.transform.position);
+            selectedBombController.parentCell = currentBombMod.parentCell;
+
+            currentBombMod.triggerMoveToPosition(selectedBomb.transform.position);
+            currentBombMod.parentCell = selectedParentCell;
+
+            foreach (GameObject bomb in grid.availableBombs)
+            {
+                bomb.GetComponent<BombController>().parentCell.GetComponent<CellScript>().isSelected = false;
+            }
+
+            foreach (GameObject mod in grid.availableMods)
+            {
+                mod.GetComponent<BombModification>().parentCell.GetComponent<CellScript>().isSelected = false;
+            }
+
+            grid.SwitchState(grid.gridListeningState);
         }
         else if (colObj.tag == "Cell")
         {
@@ -70,6 +112,11 @@ public class GridBombSelectedState : GridBaseState
             foreach (GameObject bomb in grid.availableBombs)
             {
                 bomb.GetComponent<BombController>().parentCell.GetComponent<CellScript>().isSelected = false;
+            }
+
+            foreach (GameObject mod in grid.availableMods)
+            {
+                mod.GetComponent<BombModification>().parentCell.GetComponent<CellScript>().isSelected = false;
             }
 
             grid.SwitchState(grid.gridListeningState);
