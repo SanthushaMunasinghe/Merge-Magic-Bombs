@@ -81,9 +81,9 @@ public class UIManager : MonoBehaviour
     
     public void NextLevel()
     {
-        PlayerPrefs.SetInt("CurrentLevel", _gameplayManager.levelIndex++);
-        int currentSceneIndex = _gameplayManager.levelIndex++;
-        SceneManager.LoadScene(currentSceneIndex);
+        int levelUp = (_gameplayManager.levelIndex += 1);
+        PlayerPrefs.SetInt("CurrentLevel", levelUp);
+        SceneManager.LoadScene("Level0" + (levelUp + 1));
     }
 
     public void ConfirmRandomBomb()

@@ -39,7 +39,7 @@ public class GridBombSelectedState : GridBaseState
                         mod.GetComponent<BombModification>().parentCell.GetComponent<CellScript>().isSelected = false;
                     }
 
-                    selectedBomb.GetComponent<BombController>().Blast(explosion);
+                    selectedBomb.GetComponent<BombController>().ProcessBlast(explosion);
                     grid.uIManager.blastBtn.SetActive(false);
                     grid.SwitchState(grid.gridListeningState);
                 }

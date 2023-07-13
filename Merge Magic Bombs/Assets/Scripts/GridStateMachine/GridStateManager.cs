@@ -14,6 +14,7 @@ public class GridStateManager : MonoBehaviour
     [Header("Cube Data")]
     [SerializeField] private GameObject[] _cubePrefabs;
     [SerializeField] private int _maxCubeStrengthRange;
+    public GameObject popupTxt;
     public List<GameObject> spawnedCubes = new List<GameObject>();
 
     [Header("Bomb Data")]
@@ -86,7 +87,7 @@ public class GridStateManager : MonoBehaviour
 
     private void UnlockCubeValues()
     {
-        int currentUnlockValue = gameplayManager.levelIndex - 1;
+        int currentUnlockValue = gameplayManager.levelIndex + 1;
 
         for (int i = 1; i < currentUnlockValue; i++)
         {
@@ -134,6 +135,7 @@ public class GridStateManager : MonoBehaviour
 
     public void CreateBomb(GameObject cell)
     {
+        
         int randCubeIndex = Random.Range(0, _cubeTypeUnlockValue);
         Vector3 pos = cell.transform.position;
         GameObject bombClone = Instantiate(_bombPrefabs[randCubeIndex], new Vector3(pos.x, 0.5f, pos.z), Quaternion.identity);

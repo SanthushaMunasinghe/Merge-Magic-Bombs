@@ -2021,7 +2021,7 @@ GameObject:
   - component: {fileID: 305950718}
   - component: {fileID: 305950717}
   m_Layer: 5
-  m_Name: RestartBtn
+  m_Name: NextBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5862,7 +5862,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Restart
+  m_text: Next Level
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11467,6 +11467,8 @@ MonoBehaviour:
   - {fileID: 4623432665036747010, guid: d3f8e780d5289e2489ab2c7959127feb, type: 3}
   - {fileID: 1747585849597288767, guid: 58e9ba4742e8d1343a40cecdd8bbaab5, type: 3}
   _maxCubeStrengthRange: 9
+  popupTxt: {fileID: 3331057018725514254, guid: 27ca0909ac1c711478f2a62de7d699ae,
+    type: 3}
   spawnedCubes: []
   _bombPrefabs:
   - {fileID: 7287232144077847356, guid: d45455e43f7d8c14ca96e39d22a2bf09, type: 3}
