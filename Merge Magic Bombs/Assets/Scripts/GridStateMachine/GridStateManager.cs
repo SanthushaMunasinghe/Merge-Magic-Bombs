@@ -8,12 +8,13 @@ public class GridStateManager : MonoBehaviour
     public UIManager uIManager;
 
     //Cube Data
-    private int _cubeTypeUnlockValue = 3;
+    private int _cubeTypeUnlockValue = 4;
     private int _cubeStrengthRange = 1;
 
     [Header("Cube Data")]
     [SerializeField] private GameObject[] _cubePrefabs;
     [SerializeField] private int _maxCubeStrengthRange;
+    public List<GameObject> spawnedCubes = new List<GameObject>();
 
     [Header("Bomb Data")]
     [SerializeField] private GameObject[] _bombPrefabs;
@@ -27,6 +28,7 @@ public class GridStateManager : MonoBehaviour
     //Grid Data
     [Header("Grid Data")]
     [SerializeField] private Transform _cellParent;
+    [SerializeField] private Transform _availableCellParent;
     public List<GameObject> initialCells = new List<GameObject>();
     public List<GameObject> availableCells = new List<GameObject>();
     public GameObject selectedCell;
@@ -39,6 +41,7 @@ public class GridStateManager : MonoBehaviour
     public GridPlaceBombState gridPlaceBombState = new GridPlaceBombState();
     public GridBombSelectedState gridBombSelectedState = new GridBombSelectedState();
     public GridModificationSelectedState gridModificationSelectedState = new GridModificationSelectedState();
+    public GridNotListeningState gridNotListeningState = new GridNotListeningState();
 
     void Start()
     {
@@ -48,13 +51,16 @@ public class GridStateManager : MonoBehaviour
         UnlockCubeValues();
         GenerateGrid();
 
-        currentState = gridListeningState;
+        currentState = gridNotListeningState;
         currentState.EnterState(this);
     }
 
     void Update()
     {
-        
+        if (spawnedCubes.Count <= 0)
+        {
+            gameplayManager.isGameComplete = true;
+        }
     }
 
     public void SwitchState(GridBaseState state)
@@ -71,6 +77,11 @@ public class GridStateManager : MonoBehaviour
     public void UpdateState(GridActionType type)
     {
         currentState.UpdateState(this, type);
+    }
+
+    public void GameStop()
+    {
+        currentState.ExitState(this);
     }
 
     private void UnlockCubeValues()
@@ -102,6 +113,7 @@ public class GridStateManager : MonoBehaviour
             GameObject cubeClone = Instantiate(_cubePrefabs[randCubeIndex], spawnPos, Quaternion.identity);
             cubeClone.GetComponent<CubeObject>().cubeStrength = Random.Range(1, _cubeStrengthRange + 1);
             cubeClone.GetComponent<CubeObject>().gridStateManager = this;
+            spawnedCubes.Add(cubeClone);
         }
     }
 
@@ -109,10 +121,12 @@ public class GridStateManager : MonoBehaviour
     {
         for (int i = 0; i < _cellParent.childCount; i++)
         {
-            if (i < 5)
-                availableCells.Add(_cellParent.GetChild(i).gameObject);
-            else
-                initialCells.Add(_cellParent.GetChild(i).gameObject);
+            initialCells.Add(_cellParent.GetChild(i).gameObject);
+        }
+        
+        for (int i = 0; i < _availableCellParent.childCount; i++)
+        {
+            availableCells.Add(_availableCellParent.GetChild(i).gameObject);
         }
 
         ActivateAvailableCells();
@@ -196,6 +210,8 @@ public class GridStateManager : MonoBehaviour
 
 public enum GridActionType
 {
+    Start,
+    Continue,
     PlaceBomb,
     CancelPlaceBomb,
     Blast

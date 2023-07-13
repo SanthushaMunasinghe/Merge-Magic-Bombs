@@ -1,27 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     private Camera _mainCam;
     private GridStateManager _gridStateManager;
+    private GameplayManager _gameplayManager;
 
+    public GameObject StartPanel;
+    public GameObject GameOverPanel;
+    public GameObject GameCompletePanel;
     public GameObject bombPanel;
     public GameObject blastBtn;
     public GameObject currentObject;
 
+    [SerializeField] private TextMeshProUGUI timeText;
 
     private void Awake()
     {
         _mainCam = Camera.main;
         _gridStateManager = GetComponent<GridStateManager>();
+        _gameplayManager = GetComponent<GameplayManager>();
 
     }
 
     private void Update()
     {
+        timeText.text = $"Time Left: {_gameplayManager.formattedTime}";
 
+        if (_gameplayManager.isGameOver)
+        {
+            _gridStateManager.GameStop();
+            GameOverPanel.SetActive(true);
+        }
+
+        if (_gameplayManager.isGameComplete)
+        {
+            _gridStateManager.GameStop();
+            GameCompletePanel.SetActive(true);
+        }
     }
 
     public void UITouched(Vector2 pos)
@@ -44,6 +64,19 @@ public class UIManager : MonoBehaviour
                 _gridStateManager.UITouched(collider);
             }
         }
+    }
+
+    public void StartGame()
+    {
+        StartPanel.SetActive(false);
+        _gridStateManager.UpdateState(GridActionType.Start);
+        _gameplayManager.isGameStart = true;
+    }
+
+    public void RestartGame()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 
     public void ConfirmRandomBomb()

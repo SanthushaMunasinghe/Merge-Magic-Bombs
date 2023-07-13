@@ -68,4 +68,10 @@ public class GridModificationSelectedState : GridBaseState
             grid.SwitchState(grid.gridListeningState);
         }
     }
+
+    public override void ExitState(GridStateManager grid)
+    {
+        grid.gridNotListeningState.currentState = this;
+        grid.SwitchState(grid.gridNotListeningState);
+    }
 }

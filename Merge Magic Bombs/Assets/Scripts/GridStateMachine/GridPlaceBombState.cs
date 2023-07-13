@@ -31,4 +31,10 @@ public class GridPlaceBombState : GridBaseState
     {
 
     }
+
+    public override void ExitState(GridStateManager grid)
+    {
+        grid.gridNotListeningState.currentState = this;
+        grid.SwitchState(grid.gridNotListeningState);
+    }
 }

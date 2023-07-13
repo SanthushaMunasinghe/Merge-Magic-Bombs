@@ -6,6 +6,13 @@ public class GameplayManager : MonoBehaviour
 {
     public int levelIndex;
 
+    [SerializeField] private float duration = 1.0f;
+    public string formattedTime;
+
+    public bool isGameStart = false;
+    public bool isGameOver = false;
+    public bool isGameComplete = false;
+
     void Awake()
     {
         levelIndex = 1;
@@ -13,7 +20,24 @@ public class GameplayManager : MonoBehaviour
 
     void Update()
     {
-        
+        if (isGameStart && !isGameComplete)
+            GameTimer();
+    }
+
+    private void GameTimer()
+    {
+        if (duration > 0)
+            duration -= Time.deltaTime;
+        else
+        {
+            isGameOver = true;
+        }
+
+        int minutes = Mathf.FloorToInt(duration / 60f);
+        int seconds = Mathf.FloorToInt(duration % 60f);
+        int milliseconds = Mathf.FloorToInt((duration * 1000f) % 1000f);
+
+        formattedTime = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
     }
 }
 

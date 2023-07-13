@@ -41,7 +41,7 @@ public class CubeObject : MonoBehaviour
         {
             gridStateManager.CreateModification(gameObject);
         }
-
+        gridStateManager.spawnedCubes.Remove(gameObject);
         Destroy(gameObject);
     }
 }
