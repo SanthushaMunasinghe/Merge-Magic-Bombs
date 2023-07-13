@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    public int levelIndex;
+    public int levelIndex = 0;
 
     [SerializeField] private float duration = 1.0f;
     public string formattedTime;
@@ -15,7 +15,10 @@ public class GameplayManager : MonoBehaviour
 
     void Awake()
     {
-        levelIndex = 1;
+        if (PlayerPrefs.HasKey("CurrentLevel"))
+        {
+            levelIndex = PlayerPrefs.GetInt("CurrentLevel");
+        }
     }
 
     void Update()

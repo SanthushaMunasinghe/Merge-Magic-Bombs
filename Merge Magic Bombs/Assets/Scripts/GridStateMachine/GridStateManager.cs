@@ -8,7 +8,7 @@ public class GridStateManager : MonoBehaviour
     public UIManager uIManager;
 
     //Cube Data
-    private int _cubeTypeUnlockValue = 4;
+    private int _cubeTypeUnlockValue = 3;
     private int _cubeStrengthRange = 1;
 
     [Header("Cube Data")]

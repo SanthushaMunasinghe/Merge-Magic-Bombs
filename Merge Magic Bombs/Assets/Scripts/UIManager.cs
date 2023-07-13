@@ -78,6 +78,13 @@ public class UIManager : MonoBehaviour
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
     }
+    
+    public void NextLevel()
+    {
+        PlayerPrefs.SetInt("CurrentLevel", _gameplayManager.levelIndex++);
+        int currentSceneIndex = _gameplayManager.levelIndex++;
+        SceneManager.LoadScene(currentSceneIndex);
+    }
 
     public void ConfirmRandomBomb()
     {
